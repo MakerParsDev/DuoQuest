@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.*
 internal fun HomeContent(
     games: Int, streak: Int, best: Int, playedToday: Boolean,
     onDaily: () -> Unit, onDuo: () -> Unit, onStats: () -> Unit, onInvite: () -> Unit,
+    onPrivacy: () -> Unit,
     language: String, onLanguageChange: () -> Unit
 ) {
     val compact = compactScreen()
@@ -96,6 +97,10 @@ internal fun HomeContent(
     Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
         Box(Modifier.size(7.dp).clip(CircleShape).background(Mint))
         Text(t("NO SIGN-UP • NO PRESSURE • JUST PLAY"), color = Soft, fontSize = 10.sp, letterSpacing = .3.sp)
+    }
+    TextButton(onClick = onPrivacy, modifier = Modifier.heightIn(min = 48.dp)) {
+        Text(if (language == "tr") "Gizlilik politikası" else "Privacy policy",
+            color = Mint, fontSize = 13.sp)
     }
     Spacer(Modifier.height(4.dp))
 }
