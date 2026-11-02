@@ -53,6 +53,60 @@ class QuestEngineTest {
         assertEquals(5, deck.map { it.id }.toSet().size)
         assertTrue(deck.all { it.answer in it.options.indices })
     }
+
+    @Test fun dailyPackPartitionsQuestionsWithoutRepeatsWithinItsCycle() {
+        val packDays = QuestCatalog.daily.size / QuestRules.ROUND_COUNT
+        val firstDay = LocalDate.of(2026, 11, 2)
+        val decks = (0 until packDays).map { QuestRules.dailyDeck(firstDay.plusDays(it.toLong())) }
+        val allIds = QuestCatalog.daily.map { it.id }.toSet()
+        val scheduledIds = decks.flatten().map { it.id }
+
+        assertEquals(QuestCatalog.daily.size, scheduledIds.size)
+        assertEquals(allIds, scheduledIds.toSet())
+        assertEquals(scheduledIds.size, scheduledIds.toSet().size)
+    }
+
+    @Test fun dailyPackRepeatsOnlyAfterEveryQuestionHasBeenUsed() {
+        val packDays = QuestCatalog.daily.size / QuestRules.ROUND_COUNT
+        val firstDay = LocalDate.of(2026, 11, 2)
+
+        assertEquals(
+            QuestRules.dailyDeck(firstDay),
+            QuestRules.dailyDeck(firstDay.plusDays(packDays.toLong()))
+        )
+        for (offset in 1 until packDays) {
+            val current = QuestRules.dailyDeck(firstDay.plusDays(offset.toLong())).map { it.id }.toSet()
+            val previous = QuestRules.dailyDeck(firstDay.plusDays((offset - 1).toLong())).map { it.id }.toSet()
+            assertTrue(current.intersect(previous).isEmpty())
+        }
+    }
+
+    @Test fun dailyScheduleIsIdenticalForEnglishAndTurkishClients() {
+        val day = LocalDate.of(2026, 11, 2)
+        val english = QuestRules.dailyDeck(day)
+        val turkish = english.map { QuestTranslations.localize(it, "tr") }
+
+        assertEquals(english.map { it.id }, turkish.map { it.id })
+        assertEquals(english.map { it.answer }, turkish.map { it.answer })
+    }
+
+    @Test fun ninetyDayPackUsesAllFourHundredFiftyQuestionsBeforeRepeating() {
+        val questions = (1..450).map { index ->
+            Quest("daily-" + index.toString().padStart(3, '0'), "Question " + index, listOf("A", "B", "C", "D"), 0)
+        }
+        val firstDay = LocalDate.of(2026, 11, 2)
+        val decks = (0 until 90).map { offset ->
+            QuestRules.dailyDeck(firstDay.plusDays(offset.toLong()), questions, 0x44515501L)
+        }
+        val scheduledIds = decks.flatten().map { it.id }
+
+        assertEquals(450, scheduledIds.size)
+        assertEquals(450, scheduledIds.toSet().size)
+        assertEquals(
+            QuestRules.dailyDeck(firstDay, questions, 0x44515501L),
+            QuestRules.dailyDeck(firstDay.plusDays(90), questions, 0x44515501L)
+        )
+    }
     @Test fun duoIsDeterministic() {
         assertEquals(QuestRules.duoDeck(23891), QuestRules.duoDeck(23891))
         assertEquals(5, QuestRules.duoDeck(-42).map { it.id }.toSet().size)
