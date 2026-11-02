@@ -83,10 +83,13 @@ object QuestTranslations {
         "q40" to copy("Artık yılda kaç gün bulunur?", "364", "365", "366", "367")
     )
 
-    val translatedIds: Set<String> get() = turkish.keys
+    val translatedIds: Set<String> get() = turkish.keys + CuratedDailyPack.questions.map { it.english.id }
 
     fun localize(quest: Quest, language: String): Quest {
         if (language != "tr") return quest
+        CuratedDailyPack.questions.firstOrNull { it.english.id == quest.id }?.let {
+            return it.localized(language)
+        }
         val c = turkish[quest.id] ?: return quest
         check(c.options.size == quest.options.size) { "Localized options mismatch: " + quest.id }
         return quest.copy(prompt = c.prompt, options = c.options)

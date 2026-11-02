@@ -31,9 +31,9 @@ class QuestEngineTest {
     }
 
     @Test fun contentIsUniqueAndEveryDeckIsPlayable() {
-        assertEquals(40, QuestCatalog.daily.size)
+        assertEquals(55, QuestCatalog.daily.size)
         assertEquals(35, QuestCatalog.duo.size)
-        assertEquals(40, QuestCatalog.daily.map { it.id }.toSet().size)
+        assertEquals(55, QuestCatalog.daily.map { it.id }.toSet().size)
         assertEquals(35, QuestCatalog.duo.map { it.id }.toSet().size)
         assertTrue(QuestCatalog.daily.all { it.answer in it.options.indices })
         assertTrue(QuestCatalog.duo.all { it.answer == -1 })
@@ -43,6 +43,19 @@ class QuestEngineTest {
         }
         for (seed in -100..100) {
             assertEquals(5, QuestRules.duoDeck(seed).map { it.id }.toSet().size)
+        }
+    }
+
+    @Test fun curatedDailyQuestionsHaveCompleteVerifiedBilingualMetadata() {
+        assertEquals(15, CuratedDailyPack.questions.size)
+        CuratedDailyPack.validate()
+        CuratedDailyPack.questions.forEach { q ->
+            assertTrue(q.approved)
+            assertTrue(q.sourceUrl.startsWith("https://"))
+            assertTrue(q.verifiedAt <= LocalDate.now(java.time.ZoneOffset.UTC))
+            assertEquals(q.english.options.size, q.turkishOptions.size)
+            assertTrue(q.english.answer in q.turkishOptions.indices)
+            assertEquals(q.english.answer, QuestTranslations.localize(q.english, "tr").answer)
         }
     }
 
