@@ -31,9 +31,9 @@ class QuestEngineTest {
     }
 
     @Test fun contentIsUniqueAndEveryDeckIsPlayable() {
-        assertEquals(160, QuestCatalog.daily.size)
+        assertEquals(175, QuestCatalog.daily.size)
         assertEquals(35, QuestCatalog.duo.size)
-        assertEquals(160, QuestCatalog.daily.map { it.id }.toSet().size)
+        assertEquals(175, QuestCatalog.daily.map { it.id }.toSet().size)
         assertEquals(35, QuestCatalog.duo.map { it.id }.toSet().size)
         assertTrue(QuestCatalog.daily.all { it.answer in it.options.indices })
         assertTrue(QuestCatalog.duo.all { it.answer == -1 })
@@ -47,7 +47,7 @@ class QuestEngineTest {
     }
 
     @Test fun curatedDailyQuestionsHaveCompleteVerifiedBilingualMetadata() {
-        assertEquals(120, CuratedDailyPack.questions.size)
+        assertEquals(135, CuratedDailyPack.questions.size)
         CuratedDailyPack.validate()
         CuratedDailyPack.questions.forEach { q ->
             assertTrue(q.approved)
