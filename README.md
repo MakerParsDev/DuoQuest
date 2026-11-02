@@ -28,7 +28,7 @@ Requirements: JDK 17+ and an Android SDK supporting the configured compile SDK.
 
 APK output: `app/build/outputs/apk/debug/app-debug.apk`
 
-The Android application ID is `com.makerpars.duoquest`. Minimum Android API is 26.
+The Android application ID is `com.parsfilo.duoquest`. Minimum Android API is 26.
 
 ## Configuration and secrets
 

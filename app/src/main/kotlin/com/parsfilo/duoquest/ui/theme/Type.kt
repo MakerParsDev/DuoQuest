@@ -1,4 +1,4 @@
-package com.makerpars.duoquest.ui.theme
+package com.parsfilo.duoquest.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

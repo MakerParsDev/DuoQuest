@@ -1,4 +1,4 @@
-package com.makerpars.duoquest.game
+package com.parsfilo.duoquest.game
 
 /** An intentionally non-secret, portable challenge. Never put private data into these links. */
 data class ChallengeInvite(val seed: Int, val answers: List<Int>, val version: Int = 1)

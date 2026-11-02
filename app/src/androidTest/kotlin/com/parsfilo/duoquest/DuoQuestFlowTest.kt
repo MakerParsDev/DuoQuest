@@ -1,4 +1,4 @@
-package com.makerpars.duoquest
+package com.parsfilo.duoquest
 
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -9,6 +9,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import org.junit.Rule
 import org.junit.Test
+import org.junit.Assert.assertEquals
 
 class DuoQuestFlowTest {
     @get:Rule val rule = createAndroidComposeRule<MainActivity>()
@@ -23,6 +24,10 @@ class DuoQuestFlowTest {
         val first = rule.onAllNodesWithText("Play today's drop  →")
         if (first.fetchSemanticsNodes().isNotEmpty()) first.onFirst().performClick()
         else rule.onNodeWithText("Replay today's drop  →").performClick()
+    }
+
+    @Test fun installedPackageMatchesPlayConsoleApp() {
+        assertEquals("com.parsfilo.duoquest", rule.activity.packageName)
     }
 
     @Test fun turkishLanguageChangesHomeAndQuestionWithoutResettingGameplay() {

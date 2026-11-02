@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.makerpars.duoquest.ui.theme
+package com.parsfilo.duoquest.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -25,12 +25,12 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import com.makerpars.duoquest.ui.Ink
-import com.makerpars.duoquest.ui.Panel
-import com.makerpars.duoquest.ui.Violet
-import com.makerpars.duoquest.ui.Mint
-import com.makerpars.duoquest.ui.Snow
-import com.makerpars.duoquest.ui.Frame
+import com.parsfilo.duoquest.ui.Ink
+import com.parsfilo.duoquest.ui.Panel
+import com.parsfilo.duoquest.ui.Violet
+import com.parsfilo.duoquest.ui.Mint
+import com.parsfilo.duoquest.ui.Snow
+import com.parsfilo.duoquest.ui.Frame
 
 private val DarkColorScheme = darkColorScheme(
     primary = Violet,

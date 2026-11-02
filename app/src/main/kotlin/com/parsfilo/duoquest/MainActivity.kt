@@ -1,4 +1,4 @@
-package com.makerpars.duoquest
+package com.parsfilo.duoquest
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,10 +7,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.mutableStateOf
-import com.makerpars.duoquest.game.ChallengeInvite
-import com.makerpars.duoquest.game.ChallengeInviteCodec
-import com.makerpars.duoquest.ui.DuoQuestApp
-import com.makerpars.duoquest.ui.theme.DuoQuestTheme
+import com.parsfilo.duoquest.game.ChallengeInvite
+import com.parsfilo.duoquest.game.ChallengeInviteCodec
+import com.parsfilo.duoquest.ui.DuoQuestApp
+import com.parsfilo.duoquest.ui.theme.DuoQuestTheme
 
 class MainActivity : ComponentActivity() {
     private val incomingChallenge = mutableStateOf<ChallengeInvite?>(null)

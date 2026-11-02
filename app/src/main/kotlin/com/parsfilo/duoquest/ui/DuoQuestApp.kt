@@ -1,4 +1,4 @@
-package com.makerpars.duoquest.ui
+package com.parsfilo.duoquest.ui
 
 import android.content.Context
 import androidx.core.content.edit
@@ -17,7 +17,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalConfiguration
-import com.makerpars.duoquest.game.*
+import com.parsfilo.duoquest.game.*
 import java.time.LocalDate
 
 private enum class Page { HOME, GAME, HANDOFF, FEEDBACK, RESULT, STATS }

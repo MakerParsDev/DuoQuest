@@ -1,4 +1,4 @@
-package com.makerpars.duoquest.game
+package com.parsfilo.duoquest.game
 import java.time.LocalDate
 import org.junit.Assert.*
 import org.junit.Test
