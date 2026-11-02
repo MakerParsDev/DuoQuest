@@ -14,6 +14,8 @@ import com.parsfilo.duoquest.ui.theme.DuoQuestTheme
 
 class MainActivity : ComponentActivity() {
     private val incomingChallenge = mutableStateOf<ChallengeInvite?>(null)
+    private val adsAllowed = mutableStateOf(false)
+    private lateinit var adsConsent: AdsConsent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,11 +25,16 @@ class MainActivity : ComponentActivity() {
             navigationBarStyle = SystemBarStyle.dark(android.graphics.Color.TRANSPARENT)
         )
         if (savedInstanceState == null) acceptChallenge(intent)
+        adsConsent = AdsConsent(this) { adsAllowed.value = it }
+        adsConsent.refresh()
         setContent {
             DuoQuestTheme(darkTheme = true) {
                 DuoQuestApp(
                     incomingInvite = incomingChallenge.value,
                     consumeInvite = { incomingChallenge.value = null },
+                    adsAllowed = adsAllowed.value,
+                    onPrivacyOptions = { adsConsent.showPrivacyOptions() },
+                    privacyOptionsRequired = adsConsent.privacyOptionsRequired,
                     onShare = { text ->
                         val share = Intent(Intent.ACTION_SEND).apply {
                             type = "text/plain"

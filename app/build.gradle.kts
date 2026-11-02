@@ -1,6 +1,7 @@
 plugins {
   alias(libs.plugins.android.application)
   alias(libs.plugins.compose.compiler)
+  id("com.google.gms.google-services")
 }
 
 android {
@@ -27,7 +28,7 @@ android {
   buildFeatures {
     compose = true
     aidl = false
-    buildConfig = false
+    buildConfig = true
     shaders = false
   }
 
@@ -46,6 +47,13 @@ dependencies {
   val composeBom = platform(libs.androidx.compose.bom)
   implementation(composeBom)
   androidTestImplementation(composeBom)
+
+  // Firebase Analytics uses a separate project and stays disabled until opt-in.
+  implementation(platform("com.google.firebase:firebase-bom:35.1.0"))
+  implementation("com.google.firebase:firebase-analytics")
+  // Approved publisher app identity; test ads are mandatory in debug builds.
+  implementation("com.google.android.gms:play-services-ads:25.5.0")
+  implementation("com.google.android.ump:user-messaging-platform:4.0.0")
 
   // Core Android dependencies
   implementation(libs.androidx.core.ktx)

@@ -1,6 +1,8 @@
 package com.parsfilo.duoquest.ui
 
 import android.content.Context
+import android.os.Bundle
+import com.google.firebase.analytics.FirebaseAnalytics
 import androidx.core.content.edit
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
@@ -24,7 +26,14 @@ private enum class Page { HOME, GAME, HANDOFF, FEEDBACK, RESULT, STATS, PRIVACY 
 private enum class Step { FIRST, GUESS }
 
 @Composable
-fun DuoQuestApp(incomingInvite: ChallengeInvite?, consumeInvite: () -> Unit, onShare: (String) -> Unit) {
+fun DuoQuestApp(
+    incomingInvite: ChallengeInvite?,
+    consumeInvite: () -> Unit,
+    onShare: (String) -> Unit,
+    adsAllowed: Boolean = false,
+    privacyOptionsRequired: Boolean = false,
+    onPrivacyOptions: () -> Unit = {}
+) {
     val context = LocalContext.current
     val preferences = remember { context.getSharedPreferences("duoquest_stats_v1", Context.MODE_PRIVATE) }
     val today = LocalDate.now()
@@ -33,6 +42,12 @@ fun DuoQuestApp(incomingInvite: ChallengeInvite?, consumeInvite: () -> Unit, onS
     var language by rememberSaveable {
         mutableStateOf(preferences.getString("language", null)
             ?: if (systemLanguage == "tr") "tr" else "en")
+    }
+    val analytics = remember(context) { FirebaseAnalytics.getInstance(context) }
+    var analyticsOptIn by remember { mutableStateOf(preferences.getBoolean("analyticsOptIn", false)) }
+    DisposableEffect(analytics, analyticsOptIn) {
+        analytics.setAnalyticsCollectionEnabled(analyticsOptIn)
+        onDispose { }
     }
     var games by remember { mutableIntStateOf(preferences.getInt("games", 0)) }
     var best by remember { mutableIntStateOf(preferences.getInt("best", 0)) }
@@ -63,6 +78,9 @@ fun DuoQuestApp(incomingInvite: ChallengeInvite?, consumeInvite: () -> Unit, onS
         replyAnswers = answers
         inviteVersion = version
         page = Page.GAME
+        if (analyticsOptIn) analytics.logEvent("duoquest_game_start", Bundle().apply {
+            putString("mode", next.name.lowercase())
+        })
     }
     fun finish() {
         if (mode != GameMode.INVITE) games += 1
@@ -84,6 +102,10 @@ fun DuoQuestApp(incomingInvite: ChallengeInvite?, consumeInvite: () -> Unit, onS
             putString("lastDaily", lastDaily)
         }
         page = Page.RESULT
+        if (analyticsOptIn) analytics.logEvent("duoquest_game_complete", Bundle().apply {
+            putString("mode", mode.name.lowercase())
+            putLong("score", score.toLong())
+        })
     }
     fun nextRound() {
         if (round == QuestRules.ROUND_COUNT - 1) finish()
@@ -132,7 +154,16 @@ fun DuoQuestApp(incomingInvite: ChallengeInvite?, consumeInvite: () -> Unit, onS
                     preferences.edit { putString("language", language) }
                 }
             )
-            Page.PRIVACY -> PrivacyContent(onBack = { page = Page.HOME })
+            Page.PRIVACY -> PrivacyContent(
+                onBack = { page = Page.HOME },
+                analyticsOptIn = analyticsOptIn,
+                onAnalyticsOptIn = { next ->
+                    analyticsOptIn = next
+                    preferences.edit { putBoolean("analyticsOptIn", next) }
+                },
+                privacyOptionsRequired = privacyOptionsRequired,
+                onPrivacyOptions = onPrivacyOptions
+            )
             Page.STATS -> StatsContent(games, best, streak, matches, onBack = { page = Page.HOME })
             Page.HANDOFF -> HandoffContent(round, onReady = { step = Step.GUESS; page = Page.GAME }, onBack = { page = Page.HOME })
             Page.GAME -> GameContent(mode, current, round, step == Step.FIRST,
@@ -172,14 +203,17 @@ fun DuoQuestApp(incomingInvite: ChallengeInvite?, consumeInvite: () -> Unit, onS
                         ) + ChallengeInviteCodec.encode(seed, inviteAnswers.map { it.digitToInt() }))
                     }
                 )
-            } else ResultContent(mode, score, onHome = { page = Page.HOME },
-                onPlayAgain = { if (mode == GameMode.REPLY) page = Page.HOME else start(mode) },
-                onShare = {
-                    val modeName = if (mode == GameMode.DAILY) "Daily Drop" else "Know Me"
-                    onShare(QuestText.translate("I scored", language) +
-                        " $score/5 " + QuestText.translate("on DuoQuest", language) +
-                        " $modeName! " + QuestText.translate("Can you beat me? ✦", language))
-                })
+            } else {
+                ResultContent(mode, score, onHome = { page = Page.HOME },
+                    onPlayAgain = { if (mode == GameMode.REPLY) page = Page.HOME else start(mode) },
+                    onShare = {
+                        val modeName = if (mode == GameMode.DAILY) "Daily Drop" else "Know Me"
+                        onShare(QuestText.translate("I scored", language) +
+                            " $score/5 " + QuestText.translate("on DuoQuest", language) +
+                            " $modeName! " + QuestText.translate("Can you beat me? ✦", language))
+                    })
+                ResultBanner(adsAllowed)
+            }
           }
         }
       }

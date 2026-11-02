@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "842581157148",
+    "project_id": "duoquest-34b10",
+    "storage_bucket": "duoquest-34b10.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:842581157148:android:ae8143fdecb440f0ac86d9",
+        "android_client_info": {
+          "package_name": "com.parsfilo.duoquest"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVi7MBf5zNIQiAkGjvKOfvNTjl2lGvZjs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

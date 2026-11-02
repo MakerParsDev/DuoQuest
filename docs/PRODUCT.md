@@ -31,7 +31,7 @@ A social game with high-quality, short-form moments. Easy to try, pleasant to sh
 3. **Social loop:** Test the five-answer share/receive flow on two phones. To get clickable public links and shared score history, add verified HTTPS app links and a lean server-backed challenge exchange only once privacy, abuse and hosting requirements are clear.
 4. **Metrics:** Add privacy-respecting analytics after consent/data inventory is complete. Analyze D1, D7, D30, invite rate, game completion and repeat rounds.
 5. **Monetization:** When core play is validated, consider optional rewarded ads, light non-intrusive interstitials, and paid themed packs. Do not require rewarded ads to finish a normal game.
-6. **Store release:** Play Console app is registered and bilingual copy is drafted; store assets and privacy-policy source are prepared. Verify a publicly hosted HTTPS privacy-policy URL, truthful audience/content/data disclosures, then separately configure signing and production release when authorized. AdMob, Firebase and app-ads.txt remain future work.
+6. **Store release:** Play Console app is registered and bilingual copy is drafted; store assets and privacy-policy source are prepared. Verify a publicly hosted HTTPS privacy-policy URL, truthful audience/content/data disclosures, then separately configure signing and production release when authorized. Firebase and AdMob are now integrated on the development branch; app-ads.txt and production acceptance remain open.
 
 ## Success criteria for product experiments
 
@@ -48,4 +48,4 @@ No auto-created paid service, second deployment, or additional domain is require
 - Android application ID, Kotlin namespace and Google Play registration: com.parsfilo.duoquest.
 - Earlier com.makerpars.duoquest builds were for local development. Android considers the new identifier a separate installed app; its earlier on-device test history does not migrate automatically.
 - The Play Console app entry exists as a free game with English (US) default language. It has not been submitted or released in production.
-- Production AAB signing, GitHub Actions publishing and AdMob remain future milestones. Never commit signing keys or secrets to source.
+- Production AAB signing, GitHub Actions publishing and AdMob account approval remain future milestones. Never commit signing keys or secrets to source.
