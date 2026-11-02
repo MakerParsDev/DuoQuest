@@ -43,7 +43,7 @@ system animator duration scale. All core game flows remain available offline.
 
 ## Status and follow-up
 
-The first development milestone covers daily quizzes, local pass-and-play and offline cross-device invitation challenges with local Android verification. Planned work before public release: hands-on device UX acceptance, further accessibility acceptance and two-device invitation testing, more curated content, meaningful asynchronous invitations, retention instrumentation with appropriate consent, privacy disclosures, crash observability and monetization. The Google Play app has been registered under com.parsfilo.duoquest. Store listing copy is drafted and original bilingual store assets are prepared, but no AAB or production release has been submitted. AdMob and Firebase integration are deferred.
+The first development milestone covers daily quizzes, local pass-and-play and offline cross-device invitation challenges with local Android verification. Planned work before public release: hands-on device UX acceptance, further accessibility acceptance and two-device invitation testing, more curated content, meaningful asynchronous invitations, retention instrumentation with appropriate consent, privacy disclosures, crash observability and monetization. The Google Play app has been registered under com.parsfilo.duoquest. Store listing copy is drafted and original bilingual store assets are prepared, but no AAB or production release has been submitted. Firebase Analytics and AdMob have now been configured for an unreleased development branch; production rollout remains deferred.
 
 See [product direction](docs/PRODUCT.md).
 
@@ -53,4 +53,4 @@ The English/Turkish privacy-policy source is at [docs/privacy-policy.html](docs/
 
 Original Play icon, feature graphic and real Android device screenshots are in [store-assets/](store-assets/README.md). These are source assets, not evidence of a Play Console upload, approval or production publication.
 
-The current app has no account requirement, analytics SDK, advertising SDK or remotely synchronized game profiles. When future Firebase/AdMob components are shipped, update this policy and the Google Play Ads/Data Safety declarations **before** their release.
+The game requires no account or cloud-synchronized profile. Firebase Analytics is disabled by default and enabled only through the in-app privacy choice; AdMob uses Google UMP and restricted, non-personalized ads. Debug variants use official Google test ads. Play Console Ads/Advertising ID are set to Yes for the intended monetized release; Data Safety must still be updated from the exact built SDK configuration **before production**. The shared provider privacy site remains outside this repository.

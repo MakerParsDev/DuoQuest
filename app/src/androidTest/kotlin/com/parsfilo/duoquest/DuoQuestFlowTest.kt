@@ -2,6 +2,9 @@ package com.parsfilo.duoquest
 
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.assertIsOff
+import androidx.compose.ui.test.assertIsOn
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.assertIsDisplayed
@@ -33,6 +36,18 @@ class DuoQuestFlowTest {
         rule.onNodeWithText("Analytics, ads and permissions").performScrollTo().assertExists()
         rule.onNodeWithText("←  Back to home").performClick()
         rule.onNodeWithText("The Daily Drop").assertExists()
+    }
+
+    @Test fun analyticsPreferenceStartsOffAndCanBeRevoked() {
+        ensureEnglish()
+        rule.onNodeWithText("Privacy policy").performScrollTo().performClick()
+        val consent = rule.onNodeWithContentDescription("Optional usage analytics")
+        consent.performScrollTo().assertIsOff()
+        consent.performClick()
+        consent.assertIsOn()
+        consent.performClick()
+        consent.assertIsOff()
+        rule.onNodeWithText("←  Back to home").performClick()
     }
 
     @Test fun installedPackageMatchesPlayConsoleApp() {

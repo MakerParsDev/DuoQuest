@@ -1,7 +1,7 @@
 # DuoQuest contributor guide
 
 - This is a Kotlin + Jetpack Compose Android game. Keep the core gameplay deterministic and independently testable.
-- Preserve the offline-first baseline: no silent backend dependency, analytics, advertising, paid API, or account requirement.
+- Preserve offline-first gameplay with no required account, cloud matchmaking or paid API. Firebase Analytics and AdMob are explicitly approved for a future monetized release; gate telemetry behind user opt-in and ads behind UMP consent, with Google demo IDs in debug.
 - Keep the application ID and deep-link scheme stable unless a migration is explicitly planned.
 - Treat Android share content as user-visible; never include private values or secrets.
 - Store credentials only in the team's designated external secret manager; do not commit .env, credential exports, keystores, signing passwords or local SDK paths.
