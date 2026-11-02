@@ -2,7 +2,7 @@
 
 ## Positioning
 
-A social game with high-quality, short-form moments. Easy to try, pleasant to share, rewarding to return to. Initial international audience; English-first UI with localization planned.
+A social game with high-quality, short-form moments. Easy to try, pleasant to share, rewarding to return to. Initial international audience; English and Turkish selectable inside the app, including on Android 9.
 
 ## Current experience
 
@@ -20,12 +20,14 @@ A social game with high-quality, short-form moments. Easy to try, pleasant to sh
 - Balanced stat cards, compact four-answer gameplay and readable system bars for older Android devices.
 - Gentle navigation/selection/score animations and light system haptics; no disruptive autoplay or sound.
 - Curated 40-question daily and 35-prompt social pools; no repetitive text generation service.
-- Same offline gameplay, link format and locally stored history.
+- English/Turkish UI and all quest prompts, with persistent in-app language choice. Question IDs, answer indices and user history are unchanged.
+- Old v1 friend invites retain the original 20-prompt deck; new v2 invites use 35 prompts. Both function across language settings, without online verification or guaranteed chat-app linkification.
+- Same offline gameplay and locally stored history.
 
 ## Prioritized product work
 
 1. **Experience:** Test small and large screens and system UI, accessibility, back navigation, content readability, and actual two-person flow.
-2. **Retention:** Expand and editorially check question content; localize English/Turkish; validate session completion and real-user return.
+2. **Retention:** Expand and editorially check question content; validate both languages on devices; validate session completion and real-user return.
 3. **Social loop:** Test the five-answer share/receive flow on two phones. To get clickable public links and shared score history, add verified HTTPS app links and a lean server-backed challenge exchange only once privacy, abuse and hosting requirements are clear.
 4. **Metrics:** Add privacy-respecting analytics after consent/data inventory is complete. Analyze D1, D7, D30, invite rate, game completion and repeat rounds.
 5. **Monetization:** When core play is validated, consider optional rewarded ads, light non-intrusive interstitials, and paid themed packs. Do not require rewarded ads to finish a normal game.

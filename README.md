@@ -6,7 +6,9 @@ An offline-first Android social game built for quick, replayable moments.
 
 - **Daily Drop** — five deterministic trivia questions each day from a 40-question catalog. Your best daily score and consecutive-day streak are stored locally.
 - **Know Me Better** — two players answer five prompts from a curated 35-prompt collection on the same device. The first player's choice remains hidden until the second player guesses.
-- **Challenge sharing** — answer five Know Me Better prompts privately, then share a lightweight `duoquest://play?mode=reply&seed=…&answers=…` link. A friend with DuoQuest installed can guess your five answers on their device and share their result back. The challenge payload is intentionally **not secret or tamper-resistant**; no personal data is added. Some messaging apps do not hyperlink custom schemes; verified HTTPS app links require a future domain and landing page.
+- **Challenge sharing** — answer five Know Me Better prompts privately, then share a lightweight `duoquest://play?mode=reply&seed=…&answers=…&v=2` link. A friend with DuoQuest installed can guess your five answers on their device and share their result back. The challenge payload is intentionally **not secret or tamper-resistant**; no personal data is added. Some messaging apps do not hyperlink custom schemes; verified HTTPS app links require a future domain and landing page.
+- **English / Türkçe** — switch languages from the home screen, including on Android 9. All 75 questions and answer options are translated; language preference stays on the device. The selected language does not change scoring or link interoperability.
+- **Legacy invite links** — links without a version use the original 20-question social catalog (v1); newly shared links use the expanded 35-question catalog (v2). Both preserve the meaning and answer positions in either language.
 - **Result sharing** — send a score using Android's system share sheet.
 - **Your journey** — track completed games, personal best, streak and successful duo matches.
 
@@ -41,6 +43,6 @@ system animator duration scale. All core game flows remain available offline.
 
 ## Status and follow-up
 
-The first development milestone covers daily quizzes, local pass-and-play and offline cross-device invitation challenges with local Android verification. Planned work before public release: hands-on device UX acceptance, accessibility and localization, more curated content, meaningful asynchronous invitations, retention instrumentation with appropriate consent, privacy disclosures, crash observability and monetization. Google Play / AdMob console setup is intentionally deferred.
+The first development milestone covers daily quizzes, local pass-and-play and offline cross-device invitation challenges with local Android verification. Planned work before public release: hands-on device UX acceptance, further accessibility acceptance and two-device invitation testing, more curated content, meaningful asynchronous invitations, retention instrumentation with appropriate consent, privacy disclosures, crash observability and monetization. Google Play / AdMob console setup is intentionally deferred.
 
 See [product direction](docs/PRODUCT.md).

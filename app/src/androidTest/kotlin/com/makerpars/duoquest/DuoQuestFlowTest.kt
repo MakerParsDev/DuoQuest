@@ -13,10 +13,34 @@ import org.junit.Test
 class DuoQuestFlowTest {
     @get:Rule val rule = createAndroidComposeRule<MainActivity>()
 
+    private fun ensureEnglish() {
+        val switch = rule.onAllNodesWithText("English  ↗")
+        if (switch.fetchSemanticsNodes().isNotEmpty()) switch.onFirst().performClick()
+    }
+
     private fun openDaily() {
+        ensureEnglish()
         val first = rule.onAllNodesWithText("Play today's drop  →")
         if (first.fetchSemanticsNodes().isNotEmpty()) first.onFirst().performClick()
         else rule.onNodeWithText("Replay today's drop  →").performClick()
+    }
+
+    @Test fun turkishLanguageChangesHomeAndQuestionWithoutResettingGameplay() {
+        ensureEnglish()
+        rule.onNodeWithText("Türkçe  ↗").performClick()
+        rule.onNodeWithText("Günün Beşlisi").assertExists()
+        rule.onNodeWithText("Bugünü güzel\nbir anıya dönüştür.").assertExists()
+        val first = rule.onAllNodesWithText("Günün oyununa başla  →")
+        if (first.fetchSemanticsNodes().isNotEmpty()) first.onFirst().performClick()
+        else rule.onNodeWithText("Bugünün oyununu tekrar oyna  →").performClick()
+        rule.onNodeWithText("Hızlı düşün.").assertExists()
+        rule.onNodeWithText("SORU 1").assertExists()
+        rule.onNodeWithText("D").assertIsDisplayed()
+        // Home is still usable; next launch should retain language selection.
+        rule.onNodeWithText("←  Ana sayfaya dön").performClick()
+        rule.onNodeWithText("English  ↗").assertExists()
+        rule.onNodeWithText("English  ↗").performClick()
+        rule.onNodeWithText("The Daily Drop").assertExists()
     }
 
     @Test fun dailyEntryOpensQuestions() {
@@ -39,6 +63,7 @@ class DuoQuestFlowTest {
     }
 
     @Test fun inviteFlowCollectsFiveAnswersAndOffersSharing() {
+        ensureEnglish()
         rule.onNodeWithText("Invite a friend to play").performScrollTo().performClick()
         rule.onNodeWithText("Your secret picks.").assertExists()
         repeat(5) {

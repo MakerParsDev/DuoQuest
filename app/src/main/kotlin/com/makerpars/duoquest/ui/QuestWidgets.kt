@@ -188,7 +188,7 @@ internal fun OptionCard(index: Int, text: String, onClick: () -> Unit, highlight
             .border(1.dp, if (highlight) Mint else Frame, RoundedCornerShape(16.dp))
             .clickable(
                 interactionSource = interactionSource, indication = ripple(),
-                role = Role.Button, onClickLabel = "Choose answer " + (index + 1) + ": " + text,
+                role = Role.Button, onClickLabel = t("CHOOSE ANSWER") + " " + (index + 1) + ": " + text,
                 onClick = onClick
             )
             .padding(horizontal = 13.dp, vertical = if (compactScreen()) 9.dp else 12.dp),
@@ -208,7 +208,7 @@ internal fun OptionCard(index: Int, text: String, onClick: () -> Unit, highlight
 @Composable
 internal fun BackLink(onClick: () -> Unit) {
     TextButton(onClick = onClick, contentPadding = PaddingValues(0.dp), modifier = Modifier.heightIn(min = 40.dp)) {
-        Text("←  Back to home", color = Soft, fontSize = 13.sp)
+        Text(t("←  Back to home"), color = Soft, fontSize = 13.sp)
     }
 }
 
@@ -234,7 +234,7 @@ internal fun ScoreOrb(score: Int, accent: Color = Mint) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text("$score / 5", fontSize = (if (compactScreen()) 42 else 55).sp,
                 fontWeight = FontWeight.Black, color = Snow)
-            Text("YOUR SCORE", color = accent, fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.6.sp)
+            Text(t("YOUR SCORE"), color = accent, fontSize = 10.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.6.sp)
         }
     }
 }
