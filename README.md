@@ -43,6 +43,14 @@ system animator duration scale. All core game flows remain available offline.
 
 ## Status and follow-up
 
-The first development milestone covers daily quizzes, local pass-and-play and offline cross-device invitation challenges with local Android verification. Planned work before public release: hands-on device UX acceptance, further accessibility acceptance and two-device invitation testing, more curated content, meaningful asynchronous invitations, retention instrumentation with appropriate consent, privacy disclosures, crash observability and monetization. Google Play / AdMob console setup is intentionally deferred.
+The first development milestone covers daily quizzes, local pass-and-play and offline cross-device invitation challenges with local Android verification. Planned work before public release: hands-on device UX acceptance, further accessibility acceptance and two-device invitation testing, more curated content, meaningful asynchronous invitations, retention instrumentation with appropriate consent, privacy disclosures, crash observability and monetization. The Google Play app has been registered under com.parsfilo.duoquest. Store listing copy is drafted and original bilingual store assets are prepared, but no AAB or production release has been submitted. AdMob and Firebase integration are deferred.
 
 See [product direction](docs/PRODUCT.md).
+
+## Privacy policy and store graphics
+
+The English/Turkish privacy-policy source is at [docs/privacy-policy.html](docs/privacy-policy.html); an in-app, offline policy screen is available from the home screen. A **public HTTPS policy URL is not yet published or verified**.
+
+Original Play icon, feature graphic and real Android device screenshots are in [store-assets/](store-assets/README.md). These are source assets, not evidence of a Play Console upload, approval or production publication.
+
+The current app has no account requirement, analytics SDK, advertising SDK or remotely synchronized game profiles. When future Firebase/AdMob components are shipped, update this policy and the Google Play Ads/Data Safety declarations **before** their release.

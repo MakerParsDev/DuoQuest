@@ -26,6 +26,15 @@ class DuoQuestFlowTest {
         else rule.onNodeWithText("Replay today's drop  →").performClick()
     }
 
+    @Test fun privacyPolicyOpensWithoutExternalService() {
+        ensureEnglish()
+        rule.onNodeWithText("Privacy policy").performScrollTo().performClick()
+        rule.onNodeWithText("Information stored on your device").assertExists()
+        rule.onNodeWithText("Analytics, ads and permissions").performScrollTo().assertExists()
+        rule.onNodeWithText("←  Back to home").performClick()
+        rule.onNodeWithText("The Daily Drop").assertExists()
+    }
+
     @Test fun installedPackageMatchesPlayConsoleApp() {
         assertEquals("com.parsfilo.duoquest", rule.activity.packageName)
     }

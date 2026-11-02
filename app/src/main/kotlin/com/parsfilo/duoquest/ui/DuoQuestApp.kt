@@ -20,7 +20,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import com.parsfilo.duoquest.game.*
 import java.time.LocalDate
 
-private enum class Page { HOME, GAME, HANDOFF, FEEDBACK, RESULT, STATS }
+private enum class Page { HOME, GAME, HANDOFF, FEEDBACK, RESULT, STATS, PRIVACY }
 private enum class Step { FIRST, GUESS }
 
 @Composable
@@ -124,6 +124,7 @@ fun DuoQuestApp(incomingInvite: ChallengeInvite?, consumeInvite: () -> Unit, onS
                 onDaily = { start(GameMode.DAILY) },
                 onDuo = { start(GameMode.DUO) },
                 onStats = { page = Page.STATS },
+                onPrivacy = { page = Page.PRIVACY },
                 onInvite = { start(GameMode.INVITE) },
                 language = language,
                 onLanguageChange = {
@@ -131,6 +132,7 @@ fun DuoQuestApp(incomingInvite: ChallengeInvite?, consumeInvite: () -> Unit, onS
                     preferences.edit { putString("language", language) }
                 }
             )
+            Page.PRIVACY -> PrivacyContent(onBack = { page = Page.HOME })
             Page.STATS -> StatsContent(games, best, streak, matches, onBack = { page = Page.HOME })
             Page.HANDOFF -> HandoffContent(round, onReady = { step = Step.GUESS; page = Page.GAME }, onBack = { page = Page.HOME })
             Page.GAME -> GameContent(mode, current, round, step == Step.FIRST,
