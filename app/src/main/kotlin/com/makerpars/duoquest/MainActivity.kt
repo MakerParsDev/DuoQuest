@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
                             type = "text/plain"
                             putExtra(Intent.EXTRA_TEXT, text)
                         }
-                        startActivity(Intent.createChooser(share, "Share your quest"))
+                        startActivity(Intent.createChooser(share, getString(R.string.share_quest)))
                     }
                 )
             }
@@ -52,7 +52,8 @@ class MainActivity : ComponentActivity() {
             uri.getQueryParameter("mode") == "reply"
         ) {
             incomingChallenge.value = ChallengeInviteCodec.decode(
-                uri.getQueryParameter("seed"), uri.getQueryParameter("answers")
+                uri.getQueryParameter("seed"), uri.getQueryParameter("answers"),
+                uri.getQueryParameter("v")
             )
         }
     }

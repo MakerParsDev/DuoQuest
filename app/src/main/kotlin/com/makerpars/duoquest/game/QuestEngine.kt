@@ -18,9 +18,12 @@ object QuestRules {
         val start = (date.toEpochDay() % QuestCatalog.daily.size).toInt()
         return (0 until ROUND_COUNT).map { QuestCatalog.daily[(start + it * 7) % QuestCatalog.daily.size] }
     }
-    fun duoDeck(seed: Int): List<Quest> {
-        val start = Math.floorMod(seed, QuestCatalog.duo.size)
-        return (0 until ROUND_COUNT).map { QuestCatalog.duo[(start + it * 3) % QuestCatalog.duo.size] }
+    fun duoDeck(seed: Int, version: Int = 2): List<Quest> {
+        require(version in 1..2)
+        // v1 preserves all links created before the social catalog was expanded.
+        val pool = if (version == 1) QuestCatalog.duo.take(20) else QuestCatalog.duo
+        val start = Math.floorMod(seed, pool.size)
+        return (0 until ROUND_COUNT).map { pool[(start + it * 3) % pool.size] }
     }
     fun duoPoint(firstAnswer: Int, guess: Int) = if (firstAnswer == guess) 1 else 0
     fun dailyPoint(chosen: Int, quest: Quest) = if (chosen == quest.answer) 1 else 0

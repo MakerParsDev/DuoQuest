@@ -16,6 +16,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalConfiguration
 import com.makerpars.duoquest.game.*
 import java.time.LocalDate
 
@@ -28,6 +29,11 @@ fun DuoQuestApp(incomingInvite: ChallengeInvite?, consumeInvite: () -> Unit, onS
     val preferences = remember { context.getSharedPreferences("duoquest_stats_v1", Context.MODE_PRIVATE) }
     val today = LocalDate.now()
     val haptics = LocalHapticFeedback.current
+    val systemLanguage = LocalConfiguration.current.locales.get(0).language
+    var language by rememberSaveable {
+        mutableStateOf(preferences.getString("language", null)
+            ?: if (systemLanguage == "tr") "tr" else "en")
+    }
     var games by remember { mutableIntStateOf(preferences.getInt("games", 0)) }
     var best by remember { mutableIntStateOf(preferences.getInt("best", 0)) }
     var streak by remember { mutableIntStateOf(preferences.getInt("streak", 0)) }
@@ -43,8 +49,9 @@ fun DuoQuestApp(incomingInvite: ChallengeInvite?, consumeInvite: () -> Unit, onS
     var step by rememberSaveable { mutableStateOf(Step.FIRST) }
     var inviteAnswers by rememberSaveable { mutableStateOf("") }
     var replyAnswers by rememberSaveable { mutableStateOf("") }
+    var inviteVersion by rememberSaveable { mutableIntStateOf(2) }
 
-    fun start(next: GameMode, challengeSeed: Int = (System.currentTimeMillis() % 100000).toInt(), answers: String = "") {
+    fun start(next: GameMode, challengeSeed: Int = (System.currentTimeMillis() % 100000).toInt(), answers: String = "", version: Int = 2) {
         mode = next
         seed = challengeSeed
         round = 0
@@ -54,6 +61,7 @@ fun DuoQuestApp(incomingInvite: ChallengeInvite?, consumeInvite: () -> Unit, onS
         step = Step.FIRST
         inviteAnswers = ""
         replyAnswers = answers
+        inviteVersion = version
         page = Page.GAME
     }
     fun finish() {
@@ -90,14 +98,16 @@ fun DuoQuestApp(incomingInvite: ChallengeInvite?, consumeInvite: () -> Unit, onS
 
     LaunchedEffect(incomingInvite) {
         if (incomingInvite != null) {
-            start(GameMode.REPLY, incomingInvite.seed, incomingInvite.answers.joinToString(""))
+            start(GameMode.REPLY, incomingInvite.seed, incomingInvite.answers.joinToString(""), incomingInvite.version)
             consumeInvite()
         }
     }
     BackHandler(page != Page.HOME) { page = Page.HOME }
-    val quests = if (mode == GameMode.DAILY) QuestRules.dailyDeck(today) else QuestRules.duoDeck(seed)
+    val quests = (if (mode == GameMode.DAILY) QuestRules.dailyDeck(today)
+        else QuestRules.duoDeck(seed, inviteVersion)).map { QuestTranslations.localize(it, language) }
     val current = quests[round]
 
+    CompositionLocalProvider(LocalDuoLanguage provides language) {
     AnimatedContent(
         targetState = Triple(page, round, step),
         transitionSpec = {
@@ -114,7 +124,12 @@ fun DuoQuestApp(incomingInvite: ChallengeInvite?, consumeInvite: () -> Unit, onS
                 onDaily = { start(GameMode.DAILY) },
                 onDuo = { start(GameMode.DUO) },
                 onStats = { page = Page.STATS },
-                onInvite = { start(GameMode.INVITE) }
+                onInvite = { start(GameMode.INVITE) },
+                language = language,
+                onLanguageChange = {
+                    language = if (language == "tr") "en" else "tr"
+                    preferences.edit { putString("language", language) }
+                }
             )
             Page.STATS -> StatsContent(games, best, streak, matches, onBack = { page = Page.HOME })
             Page.HANDOFF -> HandoffContent(round, onReady = { step = Step.GUESS; page = Page.GAME }, onBack = { page = Page.HOME })
@@ -149,18 +164,23 @@ fun DuoQuestApp(incomingInvite: ChallengeInvite?, consumeInvite: () -> Unit, onS
                 InviteResultContent(
                     onHome = { page = Page.HOME },
                     onShare = {
-                        onShare("I made a DuoQuest challenge for you! Try to guess my five secret answers.\n" +
-                            ChallengeInviteCodec.encode(seed, inviteAnswers.map { it.digitToInt() }))
+                        onShare(QuestText.translate(
+                            "I made a DuoQuest challenge for you! Try to guess my five secret answers.\n",
+                            language
+                        ) + ChallengeInviteCodec.encode(seed, inviteAnswers.map { it.digitToInt() }))
                     }
                 )
             } else ResultContent(mode, score, onHome = { page = Page.HOME },
                 onPlayAgain = { if (mode == GameMode.REPLY) page = Page.HOME else start(mode) },
                 onShare = {
                     val modeName = if (mode == GameMode.DAILY) "Daily Drop" else "Know Me"
-                    onShare("I scored $score/5 on DuoQuest $modeName! Can you beat me? ✦")
+                    onShare(QuestText.translate("I scored", language) +
+                        " $score/5 " + QuestText.translate("on DuoQuest", language) +
+                        " $modeName! " + QuestText.translate("Can you beat me? ✦", language))
                 })
           }
         }
       }
+    }
     }
 }

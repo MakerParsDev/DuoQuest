@@ -4,6 +4,32 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class QuestEngineTest {
+    @Test fun everyQuestHasTurkishTextWithoutChangingAnswerIndices() {
+        val all = QuestCatalog.duo + QuestCatalog.daily
+        assertEquals(all.map { it.id }.toSet(), QuestTranslations.translatedIds)
+        all.forEach { en ->
+            val tr = QuestTranslations.localize(en, "tr")
+            assertEquals(en.id, tr.id)
+            assertEquals(en.answer, tr.answer)
+            assertEquals(en.options.size, tr.options.size)
+            assertTrue(tr.prompt.isNotBlank())
+            assertTrue(tr.options.all { it.isNotBlank() })
+            assertEquals(en, QuestTranslations.localize(en, "en"))
+            assertEquals(en, QuestTranslations.localize(en, "de"))
+        }
+    }
+
+    @Test fun bothInviteCatalogVersionsPreserveQuestionIdsAcrossLanguages() {
+        for (seed in listOf(0, 17, 82017, 99999)) {
+            for (v in listOf(1, 2)) {
+                val english = QuestRules.duoDeck(seed, v)
+                val turkish = english.map { QuestTranslations.localize(it, "tr") }
+                assertEquals(english.map { it.id }, turkish.map { it.id })
+                assertEquals(english.map { it.answer }, turkish.map { it.answer })
+            }
+        }
+    }
+
     @Test fun contentIsUniqueAndEveryDeckIsPlayable() {
         assertEquals(40, QuestCatalog.daily.size)
         assertEquals(35, QuestCatalog.duo.size)
