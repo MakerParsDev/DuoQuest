@@ -79,5 +79,5 @@ object QuestCatalog {
         Quest("q38", "Which of these is a programming language?", listOf("Python", "Falcon", "Lynx", "Otter"), 0),
         Quest("q39", "What is the largest planet in our solar system?", listOf("Neptune", "Saturn", "Jupiter", "Uranus"), 2),
         Quest("q40", "How many days are in a leap year?", listOf("364", "365", "366", "367"), 2)
-    )
+    ) + CuratedDailyPack.questions.map { it.english }
 }
