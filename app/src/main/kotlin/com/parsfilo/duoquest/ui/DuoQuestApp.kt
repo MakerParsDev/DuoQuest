@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalConfiguration
 import com.parsfilo.duoquest.game.*
 import java.time.LocalDate
+import java.time.ZoneOffset
 
 private enum class Page { HOME, GAME, HANDOFF, FEEDBACK, RESULT, STATS, PRIVACY }
 private enum class Step { FIRST, GUESS }
@@ -36,7 +37,7 @@ fun DuoQuestApp(
 ) {
     val context = LocalContext.current
     val preferences = remember { context.getSharedPreferences("duoquest_stats_v1", Context.MODE_PRIVATE) }
-    val today = LocalDate.now()
+    val today = LocalDate.now(ZoneOffset.UTC)
     val haptics = LocalHapticFeedback.current
     val systemLanguage = LocalConfiguration.current.locales.get(0).language
     var language by rememberSaveable {
