@@ -4,6 +4,22 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class QuestEngineTest {
+    @Test fun contentIsUniqueAndEveryDeckIsPlayable() {
+        assertEquals(40, QuestCatalog.daily.size)
+        assertEquals(35, QuestCatalog.duo.size)
+        assertEquals(40, QuestCatalog.daily.map { it.id }.toSet().size)
+        assertEquals(35, QuestCatalog.duo.map { it.id }.toSet().size)
+        assertTrue(QuestCatalog.daily.all { it.answer in it.options.indices })
+        assertTrue(QuestCatalog.duo.all { it.answer == -1 })
+        for (offset in 0..365) {
+            val day = LocalDate.of(2026, 11, 2).plusDays(offset.toLong())
+            assertEquals(5, QuestRules.dailyDeck(day).map { it.id }.toSet().size)
+        }
+        for (seed in -100..100) {
+            assertEquals(5, QuestRules.duoDeck(seed).map { it.id }.toSet().size)
+        }
+    }
+
     @Test fun dailyIsDeterministicAndUnique() {
         val day = LocalDate.of(2026, 11, 2)
         val deck = QuestRules.dailyDeck(day)

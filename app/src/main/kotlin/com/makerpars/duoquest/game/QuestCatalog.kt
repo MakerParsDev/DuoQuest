@@ -21,7 +21,22 @@ object QuestCatalog {
         Quest("d17", "Your friends describe you as…", listOf("The planner", "The comedian", "The explorer", "The listener")),
         Quest("d18", "What do you make time for?", listOf("Music", "Friends", "Good food", "Peace and quiet")),
         Quest("d19", "The ultimate team name?", listOf("Cosmic Chaos", "Midnight Club", "The Wild Cards", "Lucky Legends")),
-        Quest("d20", "Pick a once-in-a-lifetime moment.", listOf("See Earth from space", "Swim with dolphins", "Meet a hero", "Travel through time"))
+        Quest("d20", "Pick a once-in-a-lifetime moment.", listOf("See Earth from space", "Swim with dolphins", "Meet a hero", "Travel through time")),
+        Quest("d21", "The power goes out. What's your move?", listOf("Light candles", "Tell scary stories", "Find the snacks", "Go stargazing")),
+        Quest("d22", "Choose your imaginary little shop.", listOf("Record store", "Tiny bookstore", "Coffee stand", "Plant shop")),
+        Quest("d23", "Your friend calls at midnight. You…", listOf("Pick up instantly", "Send a funny meme", "Ask if it's urgent", "Bring snacks over")),
+        Quest("d24", "Which mystery would you investigate?", listOf("A missing painting", "A secret tunnel", "A ghost ship", "A lost city")),
+        Quest("d25", "The road trip playlist starts with…", listOf("90s classics", "Indie discoveries", "Dance anthems", "Movie soundtracks")),
+        Quest("d26", "Which skill would you learn overnight?", listOf("Speak five languages", "Play the piano", "Bake anything", "Paint portraits")),
+        Quest("d27", "You have a surprise day off. First stop?", listOf("A new café", "A hiking trail", "A thrift market", "Back to bed")),
+        Quest("d28", "What makes a perfect birthday?", listOf("A small dinner", "A big surprise", "A new experience", "A quiet getaway")),
+        Quest("d29", "Which time capsule item is yours?", listOf("An old photo", "A handwritten note", "Favorite headphones", "A little souvenir")),
+        Quest("d30", "Your dream home has to include…", listOf("A rooftop garden", "A huge kitchen", "A reading nook", "A game room")),
+        Quest("d31", "Pick your team mascot.", listOf("Space otter", "Velvet dragon", "Disco penguin", "Turbo turtle")),
+        Quest("d32", "Best way to celebrate a small win?", listOf("Happy dance", "Favorite dessert", "Call a friend", "A long walk")),
+        Quest("d33", "You can replay one moment. Which?", listOf("An epic concert", "A family dinner", "A first adventure", "A perfect sunset")),
+        Quest("d34", "Your secret escape destination?", listOf("Coastal village", "Mountain hideout", "Neon city", "Desert camp")),
+        Quest("d35", "A surprise box arrives. You hope for…", listOf("Something handmade", "A silly gadget", "A new book", "A travel ticket"))
     )
     val daily = listOf(
         Quest("q01", "Which planet is famous for its rings?", listOf("Mars", "Saturn", "Venus", "Mercury"), 1),
@@ -48,6 +63,21 @@ object QuestCatalog {
         Quest("q22", "H2O is commonly known as…", listOf("Salt", "Hydrogen", "Water", "Oxygen"), 2),
         Quest("q23", "Which shape has three sides?", listOf("Square", "Triangle", "Circle", "Pentagon"), 1),
         Quest("q24", "Main ingredient of guacamole?", listOf("Tomato", "Avocado", "Cucumber", "Pea"), 1),
-        Quest("q25", "Which sport uses a shuttlecock?", listOf("Tennis", "Squash", "Badminton", "Volleyball"), 2)
+        Quest("q25", "Which sport uses a shuttlecock?", listOf("Tennis", "Squash", "Badminton", "Volleyball"), 2),
+        Quest("q26", "How many degrees are in a right angle?", listOf("45", "60", "90", "180"), 2),
+        Quest("q27", "What is the primary language of Brazil?", listOf("Spanish", "Portuguese", "French", "Italian"), 1),
+        Quest("q28", "Which planet is closest to the Sun?", listOf("Earth", "Venus", "Mercury", "Mars"), 2),
+        Quest("q29", "How many hearts does an octopus have?", listOf("One", "Two", "Three", "Four"), 2),
+        Quest("q30", "Which artist painted The Starry Night?", listOf("Picasso", "Van Gogh", "Monet", "Matisse"), 1),
+        Quest("q31", "Which ocean lies between Africa and Australia?", listOf("Arctic", "Indian", "Atlantic", "Southern"), 1),
+        Quest("q32", "What is the main gas in Earth's atmosphere?", listOf("Oxygen", "Nitrogen", "Hydrogen", "Neon"), 1),
+        Quest("q33", "What is 15% of 200?", listOf("15", "20", "30", "40"), 2),
+        Quest("q34", "How many players are on the field for one soccer team?", listOf("Nine", "Ten", "Eleven", "Twelve"), 2),
+        Quest("q35", "Which is a mammal?", listOf("Shark", "Frog", "Dolphin", "Penguin"), 2),
+        Quest("q36", "What does a thermometer measure?", listOf("Wind", "Temperature", "Distance", "Speed"), 1),
+        Quest("q37", "In music, how many notes are in a standard major scale?", listOf("Five", "Six", "Seven", "Eight"), 2),
+        Quest("q38", "Which of these is a programming language?", listOf("Python", "Falcon", "Lynx", "Otter"), 0),
+        Quest("q39", "What is the largest planet in our solar system?", listOf("Neptune", "Saturn", "Jupiter", "Uranus"), 2),
+        Quest("q40", "How many days are in a leap year?", listOf("364", "365", "366", "367"), 2)
     )
 }

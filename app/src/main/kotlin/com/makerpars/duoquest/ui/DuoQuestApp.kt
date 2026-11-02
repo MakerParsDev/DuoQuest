@@ -3,6 +3,14 @@ package com.makerpars.duoquest.ui
 import android.content.Context
 import androidx.core.content.edit
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.togetherWith
+import androidx.compose.animation.core.tween
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -19,6 +27,7 @@ fun DuoQuestApp(incomingInvite: ChallengeInvite?, consumeInvite: () -> Unit, onS
     val context = LocalContext.current
     val preferences = remember { context.getSharedPreferences("duoquest_stats_v1", Context.MODE_PRIVATE) }
     val today = LocalDate.now()
+    val haptics = LocalHapticFeedback.current
     var games by remember { mutableIntStateOf(preferences.getInt("games", 0)) }
     var best by remember { mutableIntStateOf(preferences.getInt("best", 0)) }
     var streak by remember { mutableIntStateOf(preferences.getInt("streak", 0)) }
@@ -89,9 +98,17 @@ fun DuoQuestApp(incomingInvite: ChallengeInvite?, consumeInvite: () -> Unit, onS
     val quests = if (mode == GameMode.DAILY) QuestRules.dailyDeck(today) else QuestRules.duoDeck(seed)
     val current = quests[round]
 
-    key(page, round, step) {
-      QuestBackdrop {
-        when (page) {
+    AnimatedContent(
+        targetState = Triple(page, round, step),
+        transitionSpec = {
+            (fadeIn(tween(200)) + slideInVertically(tween(220)) { it / 18 })
+                .togetherWith(fadeOut(tween(110)))
+        },
+        label = "quest page"
+    ) { visible ->
+      key(visible) {
+        QuestBackdrop {
+          when (visible.first) {
             Page.HOME -> HomeContent(
                 games = games, streak = streak, best = best, playedToday = lastDaily == today.toString(),
                 onDaily = { start(GameMode.DAILY) },
@@ -104,6 +121,7 @@ fun DuoQuestApp(incomingInvite: ChallengeInvite?, consumeInvite: () -> Unit, onS
             Page.GAME -> GameContent(mode, current, round, step == Step.FIRST,
                 onBack = { page = Page.HOME },
                 onAnswer = { index ->
+                    haptics.performHapticFeedback(HapticFeedbackType.TextHandleMove)
                     if (mode == GameMode.INVITE) {
                         inviteAnswers += index.toString()
                         nextRound()
@@ -141,6 +159,7 @@ fun DuoQuestApp(incomingInvite: ChallengeInvite?, consumeInvite: () -> Unit, onS
                     val modeName = if (mode == GameMode.DAILY) "Daily Drop" else "Know Me"
                     onShare("I scored $score/5 on DuoQuest $modeName! Can you beat me? ✦")
                 })
+          }
         }
       }
     }

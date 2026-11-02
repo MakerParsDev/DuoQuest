@@ -14,6 +14,14 @@ A social game with high-quality, short-form moments. Easy to try, pleasant to sh
 
 **Important:** Local stats are not a global leaderboard; the deep link exchanges a static, tamperable challenge, not live matchmaking or a server-recorded result. Some apps do not make custom-scheme links clickable. No purchases, online account or monetization exist yet.
 
+## UI and game feel
+
+- Cohesive midnight/violet/mint art direction and custom in-app drawn mark.
+- Balanced stat cards, compact four-answer gameplay and readable system bars for older Android devices.
+- Gentle navigation/selection/score animations and light system haptics; no disruptive autoplay or sound.
+- Curated 40-question daily and 35-prompt social pools; no repetitive text generation service.
+- Same offline gameplay, link format and locally stored history.
+
 ## Prioritized product work
 
 1. **Experience:** Test small and large screens and system UI, accessibility, back navigation, content readability, and actual two-person flow.

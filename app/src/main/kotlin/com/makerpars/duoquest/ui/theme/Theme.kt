@@ -25,12 +25,26 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import com.makerpars.duoquest.ui.Ink
+import com.makerpars.duoquest.ui.Panel
+import com.makerpars.duoquest.ui.Violet
+import com.makerpars.duoquest.ui.Mint
+import com.makerpars.duoquest.ui.Snow
+import com.makerpars.duoquest.ui.Frame
 
 private val DarkColorScheme = darkColorScheme(
-    primary = primaryDark,
-    primaryContainer = primaryContainerDark,
-    secondary = secondaryDark,
-    tertiary = tertiaryDark
+    primary = Violet,
+    onPrimary = Ink,
+    primaryContainer = Panel,
+    onPrimaryContainer = Snow,
+    secondary = Mint,
+    onSecondary = Ink,
+    background = Ink,
+    onBackground = Snow,
+    surface = Panel,
+    onSurface = Snow,
+    outline = Frame,
+    tertiary = Mint
 )
 
 private val LightColorScheme = lightColorScheme(
