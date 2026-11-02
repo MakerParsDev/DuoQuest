@@ -1,0 +1,54 @@
+package com.makerpars.duoquest
+
+import android.content.Intent
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.mutableStateOf
+import com.makerpars.duoquest.game.ChallengeInvite
+import com.makerpars.duoquest.game.ChallengeInviteCodec
+import com.makerpars.duoquest.ui.DuoQuestApp
+import com.makerpars.duoquest.ui.theme.DuoQuestTheme
+
+class MainActivity : ComponentActivity() {
+    private val incomingChallenge = mutableStateOf<ChallengeInvite?>(null)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        if (savedInstanceState == null) acceptChallenge(intent)
+        setContent {
+            DuoQuestTheme(darkTheme = true) {
+                DuoQuestApp(
+                    incomingInvite = incomingChallenge.value,
+                    consumeInvite = { incomingChallenge.value = null },
+                    onShare = { text ->
+                        val share = Intent(Intent.ACTION_SEND).apply {
+                            type = "text/plain"
+                            putExtra(Intent.EXTRA_TEXT, text)
+                        }
+                        startActivity(Intent.createChooser(share, "Share your quest"))
+                    }
+                )
+            }
+        }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        acceptChallenge(intent)
+    }
+
+    private fun acceptChallenge(intent: Intent?) {
+        val uri = intent?.data ?: return
+        if (uri.scheme == "duoquest" && uri.host == "play" &&
+            uri.getQueryParameter("mode") == "reply"
+        ) {
+            incomingChallenge.value = ChallengeInviteCodec.decode(
+                uri.getQueryParameter("seed"), uri.getQueryParameter("answers")
+            )
+        }
+    }
+}
