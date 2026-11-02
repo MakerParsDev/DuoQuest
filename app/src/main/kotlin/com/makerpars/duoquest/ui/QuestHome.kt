@@ -2,6 +2,7 @@ package com.makerpars.duoquest.ui
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -16,69 +17,109 @@ internal fun HomeContent(
     games: Int, streak: Int, best: Int, playedToday: Boolean,
     onDaily: () -> Unit, onDuo: () -> Unit, onStats: () -> Unit, onInvite: () -> Unit
 ) {
+    val compact = compactScreen()
     BrandHeader()
-    Tag("YOUR DAILY SPARK")
-    LargeTitle("Make today a\ngood story.", "Tiny challenges. Big conversations. More reasons to connect.")
-    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(9.dp)) {
+        Tag("A LITTLE JOY, EVERY DAY", Mint)
+        Text("✦", color = Violet, fontSize = 14.sp)
+    }
+    LargeTitle(
+        "Make today a\ngood story.",
+        "Quick games. Better conversations. Something worth sharing.",
+        compact = compact
+    )
+    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         StatTile("$streak", "DAY STREAK", Modifier.weight(1f))
         StatTile("$best / 5", "BEST SCORE", Modifier.weight(1f))
         StatTile("$games", "GAMES PLAYED", Modifier.weight(1f))
     }
     Column(
-        Modifier.fillMaxWidth().clip(RoundedCornerShape(28.dp))
-            .background(Brush.linearGradient(listOf(Color(0xFF8A69ED), Color(0xFF5753B9), Color(0xFF304175))))
-            .padding(23.dp), verticalArrangement = Arrangement.spacedBy(14.dp)
+        Modifier.fillMaxWidth().clip(RoundedCornerShape(24.dp))
+            .background(
+                Brush.linearGradient(
+                    listOf(Color(0xFF8361DF), Color(0xFF635DB6), Color(0xFF304675))
+                )
+            )
+            .border(1.dp, Color.White.copy(alpha = .2f), RoundedCornerShape(24.dp))
+            .padding(if (compact) 17.dp else 22.dp),
+        verticalArrangement = Arrangement.spacedBy(if (compact) 10.dp else 13.dp)
     ) {
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            Tag(if (playedToday) "TODAY COMPLETED" else "NEW TODAY", Mint)
-            Text("✧", color = Color.White.copy(alpha = 0.8f), fontSize = 38.sp)
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically) {
+            Tag(if (playedToday) "COME BACK TOMORROW" else "FRESH TODAY", Mint)
+            Text("✦", color = Mint, fontSize = 26.sp)
         }
-        Text("The Daily\nDrop", color = Color.White, fontSize = 32.sp, fontWeight = FontWeight.Black, lineHeight = 34.sp)
-        Text("Five quick questions. One new chance every day. How far can you go?",
-            color = Color.White.copy(alpha = 0.88f), fontSize = 14.sp, lineHeight = 21.sp)
+        Text("The Daily Drop", color = Color.White, fontSize = (if (compact) 26 else 29).sp,
+            fontWeight = FontWeight.Black, letterSpacing = (-.7).sp)
+        Text("Five new questions. A quick win for your brain.",
+            color = Color.White.copy(alpha = .9f), fontSize = 13.sp, lineHeight = 19.sp)
         SolidButton(if (playedToday) "Replay today's drop  →" else "Play today's drop  →",
             onClick = onDaily, accent = Mint)
     }
-    Text("BETTER TOGETHER", color = Soft, fontWeight = FontWeight.Bold, letterSpacing = 1.7.sp, fontSize = 11.sp)
+    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween) {
+        Text("PLAY WITH PEOPLE", color = Soft, fontWeight = FontWeight.Bold,
+            letterSpacing = 1.2.sp, fontSize = 11.sp)
+        Text("02 MODES", color = Violet, fontSize = 10.sp, fontWeight = FontWeight.Bold)
+    }
     GlassCard {
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-            Tag("2 PLAYERS · 5 ROUNDS")
-            Text("♡", color = Violet, fontSize = 29.sp)
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically) {
+            Tag("PASS & PLAY • 5 ROUNDS")
+            Text("♡", color = Mint, fontSize = 25.sp)
         }
-        Text("Know Me Better", color = Snow, fontWeight = FontWeight.ExtraBold, fontSize = 24.sp)
-        Text("Choose your answer. Pass the phone. Can your friend guess you right?",
-            color = Soft, fontSize = 14.sp, lineHeight = 20.sp)
+        Text("Know Me Better", color = Snow, fontWeight = FontWeight.ExtraBold, fontSize = 23.sp)
+        Text("Pick your answer. Pass the phone. Discover what your friend really knows.",
+            color = Soft, fontSize = 13.sp, lineHeight = 19.sp)
         SolidButton("Start a duo quest  →", onClick = onDuo)
         OutlineButton("Invite a friend to play", onClick = onInvite)
     }
-    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-        Text("Your journey", color = Snow, fontWeight = FontWeight.Bold, fontSize = 18.sp)
-        TextButton(onClick = onStats) { Text("View stats  ↗", color = Mint) }
+    GlassCard {
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically) {
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(5.dp)) {
+                Text("YOUR JOURNEY", color = Violet, fontWeight = FontWeight.Bold,
+                    letterSpacing = 1.sp, fontSize = 10.sp)
+                Text("Every round counts.", color = Snow, fontSize = 17.sp, fontWeight = FontWeight.Bold)
+                Text("Your scores stay right here.", color = Soft, fontSize = 12.sp)
+            }
+            TextButton(onClick = onStats) { Text("See stats  ↗", color = Mint, fontSize = 13.sp) }
+        }
     }
-    Text("No sign-up. No pressure. Just play.", color = Soft, fontSize = 12.sp)
-    Spacer(Modifier.height(9.dp))
+    Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+        Box(Modifier.size(7.dp).clip(CircleShape).background(Mint))
+        Text("NO SIGN-UP • NO PRESSURE • JUST PLAY", color = Soft, fontSize = 10.sp, letterSpacing = .3.sp)
+    }
+    Spacer(Modifier.height(4.dp))
 }
 
 @Composable
 internal fun StatsContent(games: Int, best: Int, streak: Int, matches: Int, onBack: () -> Unit) {
     BackLink(onBack)
-    Tag("YOUR PROGRESS")
-    LargeTitle("Every round\ncounts.", "Your results stay on this device. Play again to level up.")
+    Tag("YOUR JOURNEY", Mint)
+    LargeTitle("A little progress.\nA lot of fun.", "Each game is another reason to come back.")
     GlassCard {
-        Text("ALL-TIME STATS", color = Violet, letterSpacing = 1.5.sp, fontSize = 12.sp, fontWeight = FontWeight.Bold)
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            StatTile("$games", "FINISHED GAMES", Modifier.weight(1f))
+        Text("YOUR HIGHLIGHTS", color = Violet, letterSpacing = 1.2.sp,
+            fontSize = 11.sp, fontWeight = FontWeight.Bold)
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(9.dp)) {
+            StatTile("$games", "GAMES PLAYED", Modifier.weight(1f))
             StatTile("$best / 5", "BEST DAILY", Modifier.weight(1f))
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(9.dp)) {
             StatTile("$streak", "DAY STREAK", Modifier.weight(1f))
-            StatTile("$matches", "MATCHED ANSWERS", Modifier.weight(1f))
+            StatTile("$matches", "DUO MATCHES", Modifier.weight(1f))
         }
     }
     GlassCard {
-        Text("✦  Keep the spark alive", color = Mint, fontSize = 18.sp, fontWeight = FontWeight.Bold)
-        Text("Play the daily drop and invite a friend for a five-round duo quest.",
-            color = Soft, fontSize = 14.sp, lineHeight = 21.sp)
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            SparkMark()
+            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text("A new chance every day", color = Snow, fontSize = 16.sp,
+                    fontWeight = FontWeight.ExtraBold)
+                Text("Try tomorrow's drop, or find out how well a friend knows you.",
+                    color = Soft, fontSize = 13.sp, lineHeight = 19.sp)
+            }
+        }
     }
     OutlineButton("Back to your quests", onClick = onBack)
 }
