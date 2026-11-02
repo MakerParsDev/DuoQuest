@@ -1,4 +1,4 @@
-package com.makerpars.duoquest.game
+package com.parsfilo.duoquest.game
 
 /** Only presentation changes by language. Question IDs, answer indices and link seeds stay stable. */
 object QuestTranslations {

@@ -1,4 +1,4 @@
-package com.makerpars.duoquest.game
+package com.parsfilo.duoquest.game
 
 object QuestCatalog {
     val duo = listOf(

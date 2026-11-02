@@ -1,4 +1,4 @@
-package com.makerpars.duoquest.ui
+package com.parsfilo.duoquest.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf

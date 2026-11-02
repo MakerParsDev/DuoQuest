@@ -42,3 +42,10 @@ Targets for early cohorts, **not measured results**:
 - Positive unit economics after real country mix, fill rate, SDK fees and user acquisition costs are known.
 
 No auto-created paid service, second deployment, or additional domain is required for the current milestone.
+
+## Google Play application identity
+
+- Android application ID, Kotlin namespace and Google Play registration: com.parsfilo.duoquest.
+- Earlier com.makerpars.duoquest builds were for local development. Android considers the new identifier a separate installed app; its earlier on-device test history does not migrate automatically.
+- The Play Console app entry exists as a free game with English (US) default language. It has not been submitted or released in production.
+- Production AAB signing, GitHub Actions publishing and AdMob remain future milestones. Never commit signing keys or secrets to source.

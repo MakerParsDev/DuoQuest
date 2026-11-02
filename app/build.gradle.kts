@@ -4,10 +4,10 @@ plugins {
 }
 
 android {
-  namespace = "com.makerpars.duoquest"
+  namespace = "com.parsfilo.duoquest"
   compileSdk = 37
   defaultConfig {
-    applicationId = "com.makerpars.duoquest"
+    applicationId = "com.parsfilo.duoquest"
     minSdk = 26
     targetSdk = 37
     versionCode = 1

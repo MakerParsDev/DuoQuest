@@ -1,4 +1,4 @@
-package com.makerpars.duoquest.ui
+package com.parsfilo.duoquest.ui
 
 import org.junit.Assert.*
 import org.junit.Test

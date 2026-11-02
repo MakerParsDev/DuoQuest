@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.makerpars.duoquest.ui.theme
+package com.parsfilo.duoquest.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

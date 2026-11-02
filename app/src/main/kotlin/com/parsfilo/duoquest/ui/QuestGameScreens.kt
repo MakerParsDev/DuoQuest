@@ -1,4 +1,4 @@
-package com.makerpars.duoquest.ui
+package com.parsfilo.duoquest.ui
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -10,9 +10,9 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.*
-import com.makerpars.duoquest.game.GameMode
-import com.makerpars.duoquest.game.Quest
-import com.makerpars.duoquest.game.QuestRules
+import com.parsfilo.duoquest.game.GameMode
+import com.parsfilo.duoquest.game.Quest
+import com.parsfilo.duoquest.game.QuestRules
 
 @Composable
 internal fun GameContent(

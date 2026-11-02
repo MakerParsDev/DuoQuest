@@ -1,4 +1,4 @@
-package com.makerpars.duoquest.ui
+package com.parsfilo.duoquest.ui
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
